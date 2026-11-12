@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="id" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Studio - Win Motion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="container navbar-inner">
+        <a href="/studio" class="brand">
+          <div class="brand-icon"><i class="fa-solid fa-film"></i></div>
+          <div class="brand-text">
+            <div class="brand-name">Win Motion</div>
+            <div class="brand-sub">Studio</div>
+          </div>
+        </a>
+        <nav class="nav-links">
+          <a href="/studio" class="nav-link active"
+            ><i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>Studio</span></a
+          >
+          <a href="/compositions" class="nav-link"
+            ><i class="fa-solid fa-code"></i> <span>Compositions</span></a
+          >
+          <a href="/render" class="nav-link"
+            ><i class="fa-solid fa-photo-film"></i> <span>Renders</span></a
+          >
+          <a href="/docs" class="nav-link"
+            ><i class="fa-solid fa-book"></i> <span>Docs</span></a
+          >
+        </nav>
+        <button id="themeToggle" class="theme-toggle">
+          <i class="fa-solid fa-moon icon-dark"></i>
+          <i class="fa-solid fa-sun icon-light"></i>
+        </button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container">
+        <span class="hero-badge"
+          ><i class="fa-solid fa-bolt"></i> Puppeteer + ffmpeg-static</span
+        >
+        <h1 class="hero-title">
+          Studio <span class="gradient-text">Render</span>
+        </h1>
+        <p class="hero-sub">Konfigurasi render dengan presisi hingga 4K.</p>
+      </div>
+    </section>
+
+    <main class="container main-content">
+      <!-- Sticky Sidebar -->
+      <aside class="panel sidebar-sticky" id="studio">
+        <div class="panel-header">
+          <h2><i class="fa-solid fa-folder-open"></i> Compositions</h2>
+          <button class="btn-icon" id="refreshBtn" title="Refresh">
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </div>
+        <ul id="compList" class="comp-list">
+          <li class="loading">
+            <i class="fa-solid fa-spinner fa-spin"></i> Memuat…
+          </li>
+        </ul>
+        <div class="panel-footer">
+          <a
+            href="/compositions"
+            class="btn btn-ghost btn-sm"
+            style="width: 100%; justify-content: center; text-decoration: none;">
+            <i class="fa-solid fa-plus"></i> Kelola Compositions
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <section class="panel panel-main">
+        <div class="panel-header">
+          <h2><i class="fa-solid fa-sliders"></i> Render Configuration</h2>
+          <span class="badge" id="activeCompName">-</span>
+        </div>
+
+        <form id="renderForm" class="form">
+          <div class="form-group">
+            <label>Composition</label>
+            <select id="compSelect" required></select>
+          </div>
+
+          <div class="preset-section">
+            <div class="preset-title">
+              <i class="fa-solid fa-gauge-high"></i> Resolution Presets
+            </div>
+            <div class="preset-grid" id="resolutionPresets">
+              <button
+                type="button"
+                class="preset-btn"
+                data-w="854"
+                data-h="480"
+              >
+                <i class="fa-solid fa-mobile-screen"></i><strong>480p</strong
+                ><span>854×480</span>
+              </button>
+              <button
+                type="button"
+                class="preset-btn active"
+                data-w="1280"
+                data-h="720"
+              >
+                <i class="fa-solid fa-desktop"></i><strong>720p HD</strong
+                ><span>1280×720</span>
+              </button>
+              <button
+                type="button"
+                class="preset-btn"
+                data-w="1920"
+                data-h="1080"
+              >
+                <i class="fa-solid fa-tv"></i><strong>1080p FHD</strong
+                ><span>1920×1080</span>
+              </button>
+              <button
+                type="button"
+                class="preset-btn"
+                data-w="2560"
+                data-h="1440"
+              >
+                <i class="fa-solid fa-tv"></i><strong>1440p QHD</strong
+                ><span>2560×1440</span>
+              </button>
+              <button
+                type="button"
+                class="preset-btn"
+                data-w="3840"
+                data-h="2160"
+              >
+                <i class="fa-solid fa-tv"></i><strong>4K UHD</strong
+                ><span>3840×2160</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="preset-section">
+            <div class="preset-title">
+              <i class="fa-solid fa-crop-simple"></i> Aspect Ratio
+            </div>
+            <div class="preset-grid preset-grid-ar" id="aspectPresets">
+              <button
+                type="button"
+                class="preset-btn ar-btn active"
+                data-ratio="16:9"
+              >
+                <div class="ar-shape" style="aspect-ratio: 16/9"></div>
+                <strong>16:9</strong><span>Landscape</span>
+              </button>
+              <button type="button" class="preset-btn ar-btn" data-ratio="9:16">
+                <div class="ar-shape" style="aspect-ratio: 9/16"></div>
+                <strong>9:16</strong><span>Reels</span>
+              </button>
+              <button type="button" class="preset-btn ar-btn" data-ratio="1:1">
+                <div class="ar-shape" style="aspect-ratio: 1/1"></div>
+                <strong>1:1</strong><span>Square</span>
+              </button>
+              <button type="button" class="preset-btn ar-btn" data-ratio="4:3">
+                <div class="ar-shape" style="aspect-ratio: 4/3"></div>
+                <strong>4:3</strong><span>Classic</span>
+              </button>
+              <button type="button" class="preset-btn ar-btn" data-ratio="3:4">
+                <div class="ar-shape" style="aspect-ratio: 3/4"></div>
+                <strong>3:4</strong><span>Portrait</span>
+              </button>
+              <button type="button" class="preset-btn ar-btn" data-ratio="4:5">
+                <div class="ar-shape" style="aspect-ratio: 4/5"></div>
+                <strong>4:5</strong><span>IG</span>
+              </button>
+              <button type="button" class="preset-btn ar-btn" data-ratio="21:9">
+                <div class="ar-shape" style="aspect-ratio: 21/9"></div>
+                <strong>21:9</strong><span>Ultrawide</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Duration + FPS row -->
+          <div class="form-row form-row-3">
+            <div class="form-group">
+              <label>FPS</label>
+              <select id="fpsInput">
+                <option value="24">24 (Cinema)</option>
+                <option value="25">25 (PAL)</option>
+                <option value="30" selected>30 (Standard)</option>
+                <option value="50">50 (Smooth)</option>
+                <option value="60">60 (Gaming)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>
+                Duration (s)
+                <span class="hint">- isi dalam detik</span>
+              </label>
+              <input
+                type="number"
+                id="durationSecInput"
+                value="3"
+                min="0.1"
+                max="600"
+                step="0.1"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>
+                Frames
+                <span class="hint" id="framesAutoInfo">= 3s × 30fps</span>
+              </label>
+              <input
+                type="number"
+                id="durationInput"
+                value="90"
+                min="1"
+                max="18000"
+              />
+            </div>
+          </div>
+
+          <!-- Quality + format + custom size row -->
+          <div class="form-row form-row-4">
+            <div class="form-group">
+              <label>Width</label>
+              <input
+                type="number"
+                id="widthInput"
+                value="1280"
+                min="100"
+                max="7680"
+              />
+            </div>
+            <div class="form-group">
+              <label>Height</label>
+              <input
+                type="number"
+                id="heightInput"
+                value="720"
+                min="100"
+                max="4320"
+              />
+            </div>
+            <div class="form-group">
+              <label>Quality</label>
+              <select id="qualityInput">
+                <option value="low">Low (cepat)</option>
+                <option value="medium">Medium</option>
+                <option value="high" selected>High</option>
+                <option value="ultra">Ultra (lambat)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Format</label>
+              <select id="formatInput">
+                <option value="mp4" selected>MP4</option>
+                <option value="webm">WebM</option>
+                <option value="gif">GIF</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="info-box">
+            <i class="fa-solid fa-circle-info"></i>
+            <div>
+              <strong>Preview Output:</strong>
+              <span id="outputInfo"
+                >1280 × 720 (16:9) · 30fps · 3.00s · 90 frames · MP4</span
+              >
+            </div>
+          </div>
+
+          <!-- Props Section -->
+          <div class="props-section">
+            <div class="props-header">
+              <label class="props-label">
+                <i class="fa-solid fa-sliders"></i> Props
+                <span class="hint" id="propsCount">-</span>
+              </label>
+              <div class="props-mode-toggle">
+                <button type="button" class="mode-btn active" data-mode="gui">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> GUI
+                </button>
+                <button type="button" class="mode-btn" data-mode="json">
+                  <i class="fa-solid fa-code"></i> JSON
+                </button>
+              </div>
+            </div>
+
+            <div id="propsGui" class="props-gui">
+              <div class="props-empty" id="propsEmpty">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <p>Pilih composition untuk melihat props</p>
+                <span>Props akan otomatis terdeteksi dari kode</span>
+              </div>
+              <div
+                class="props-fields"
+                id="propsFields"
+                style="display: none"
+              ></div>
+            </div>
+
+            <div id="propsJson" class="props-json" style="display: none">
+              <textarea id="propsInput" rows="8" spellcheck="false">
+{
+  "title": "Hello, Windows!",
+  "subtitle": "Powered by Win Motion"
+}</textarea
+              >
+              <div class="json-hint">
+                <i class="fa-solid fa-circle-info"></i>
+                Edit JSON manual. Perubahan akan otomatis sync ke GUI mode saat
+                switch kembali.
+              </div>
+            </div>
+
+            <div class="props-actions">
+              <button
+                type="button"
+                class="btn btn-ghost btn-sm"
+                id="resetPropsBtn"
+                title="Reset ke default"
+              >
+                <i class="fa-solid fa-rotate-left"></i> Reset Default
+              </button>
+              <button
+                type="button"
+                class="btn btn-ghost btn-sm"
+                id="copyPropsBtn"
+                title="Copy JSON"
+              >
+                <i class="fa-solid fa-copy"></i> Copy JSON
+              </button>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-ghost" id="clearBtn">
+              <i class="fa-solid fa-eraser"></i> Clear
+            </button>
+            <button type="submit" class="btn btn-primary" id="renderBtn">
+              <i class="fa-solid fa-play"></i> Render Video
+            </button>
+          </div>
+        </form>
+
+        <!-- Progress with cancel button + frame preview -->
+        <div class="progress-wrap hidden" id="progressWrap">
+          <div class="progress-info">
+            <span
+              ><i class="fa-solid fa-circle-notch fa-spin"></i>
+              <span id="progressStage">Merender…</span></span
+            >
+            <span id="progressText">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+
+          <div class="progress-meta">
+            <span id="progressFrame">Frame 0 / 0</span>
+            <span id="progressEta">-</span>
+          </div>
+
+          <!-- Live frame preview -->
+          <div
+            class="frame-preview"
+            id="framePreviewWrap"
+            style="display: none"
+          >
+            <div class="frame-preview-label">
+              <i class="fa-solid fa-image"></i> Live Preview
+            </div>
+            <div class="frame-preview-img-wrap">
+              <img id="framePreviewImg" alt="Frame preview" />
+            </div>
+          </div>
+
+          <div class="progress-actions">
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              id="cancelRenderBtn"
+            >
+              <i class="fa-solid fa-stop"></i> Batalkan Render
+            </button>
+          </div>
+        </div>
+
+        <!-- Preview -->
+        <div class="preview-wrap">
+          <div class="preview-header">
+            <h2><i class="fa-solid fa-circle-play"></i> Preview</h2>
+            <div style="display: flex; gap: 8px">
+              <button
+                class="btn-icon"
+                id="downloadBtn"
+                title="Download"
+                style="display: none"
+              >
+                <i class="fa-solid fa-download"></i>
+              </button>
+              <a style="text-decoration: none;" href="/render" class="btn btn-ghost btn-sm"><i class="fa-solid fa-photo-film"></i> Lihat Semua</a
+              >
+            </div>
+          </div>
+          <div class="preview-box">
+            <video id="previewVideo" controls autoplay loop></video>
+            <div id="previewEmpty" class="preview-empty">
+              <i class="fa-solid fa-clapperboard"></i>
+              <p>Belum ada video dirender</p>
+              <span>Klik "Render Video" untuk melihat hasilnya</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container"><p>© 2025 Win Motion Studio v2</p></div>
+    </footer>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    <div id="modalOverlay" class="modal-overlay hidden">
+      <div class="modal">
+        <div class="modal-header">
+          <i id="modalIcon" class="fa-solid fa-circle-info"></i>
+          <h3 id="modalTitle">Info</h3>
+        </div>
+        <div class="modal-body"><p id="modalBody">Pesan</p></div>
+        <div class="modal-actions" id="modalButtons"></div>
+      </div>
+    </div>
+
+    <script src="/js/props-detector.js"></script>
+    <script src="/js/common.js"></script>
+    <script src="/js/studio.js"></script>
+  </body>
+</html>

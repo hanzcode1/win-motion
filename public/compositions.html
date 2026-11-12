@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Compositions - Win Motion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<header class="navbar">
+  <div class="container navbar-inner">
+    <a href="/studio" class="brand">
+      <div class="brand-icon"><i class="fa-solid fa-film"></i></div>
+      <div class="brand-text">
+        <div class="brand-name">Win Motion</div>
+        <div class="brand-sub">Compositions</div>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="/studio" class="nav-link"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>Studio</span></a>
+      <a href="/compositions" class="nav-link active"><i class="fa-solid fa-code"></i> <span>Compositions</span></a>
+      <a href="/render" class="nav-link"><i class="fa-solid fa-photo-film"></i> <span>Renders</span></a>
+      <a href="/docs" class="nav-link"><i class="fa-solid fa-book"></i> <span>Docs</span></a>
+    </nav>
+    <button id="themeToggle" class="theme-toggle">
+      <i class="fa-solid fa-moon icon-dark"></i>
+      <i class="fa-solid fa-sun icon-light"></i>
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="hero-badge"><i class="fa-solid fa-code"></i> Composition Editor</span>
+    <h1 class="hero-title">Kelola <span class="gradient-text">Compositions</span></h1>
+    <p class="hero-sub">Buat, edit, dan hapus composition TypeScript langsung dari browser.</p>
+  </div>
+</section>
+
+<main class="container main-content">
+
+  <!-- Sidebar list (sticky) -->
+  <aside class="panel sidebar-sticky">
+    <div class="panel-header">
+      <h2><i class="fa-solid fa-list"></i> Daftar</h2>
+      <button class="btn-icon" id="refreshBtn" title="Refresh"><i class="fa-solid fa-rotate"></i></button>
+    </div>
+    <ul id="compList" class="comp-list">
+      <li class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Memuat…</li>
+    </ul>
+    <div class="panel-footer">
+      <button class="btn btn-primary btn-sm" id="newCompBtn" style="width:100%;justify-content:center">
+        <i class="fa-solid fa-plus"></i> Composition Baru
+      </button>
+    </div>
+  </aside>
+
+  <!-- Editor Panel -->
+  <section class="panel panel-main">
+    <div class="panel-header">
+      <h2><i class="fa-solid fa-code"></i> <span id="editorTitle">Pilih Composition</span></h2>
+      <div style="display:flex;gap:6px">
+        <span class="badge" id="editorStatus">-</span>
+      </div>
+    </div>
+
+    <!-- Empty state - HANYA muncul saat belum pilih composition -->
+    <div id="emptyState" class="empty-state">
+      <i class="fa-solid fa-file-code"></i>
+      <p>Pilih composition dari daftar atau buat baru</p>
+      <button class="btn btn-primary" id="newCompBtn2" style="margin-top:16px">
+        <i class="fa-solid fa-plus"></i> Composition Baru
+      </button>
+    </div>
+
+    <!-- Editor wrap - HANYA muncul setelah pilih composition -->
+    <div id="editorWrap" class="editor-wrap hidden">
+      <div class="editor-toolbar">
+        <button class="btn btn-ghost btn-sm" id="saveBtn">
+          <i class="fa-solid fa-floppy-disk"></i> Simpan
+        </button>
+        <button class="btn btn-ghost btn-sm" id="renameBtn">
+          <i class="fa-solid fa-pen"></i> Rename
+        </button>
+        <button class="btn btn-ghost btn-sm" id="deleteBtn" style="color:var(--danger)">
+          <i class="fa-solid fa-trash"></i> Hapus
+        </button>
+        <div style="flex:1"></div>
+        <button class="btn btn-ghost btn-sm" id="previewBtn">
+          <i class="fa-solid fa-eye"></i> Cek Syntax
+        </button>
+        <a href="/studio" class="btn btn-primary btn-sm"  style="text-decoration: none;">
+          <i class="fa-solid fa-play"></i> Render Ini
+        </a>
+      </div>
+
+      <div class="editor-container">
+        <div class="line-numbers" id="lineNumbers">1</div>
+        <textarea id="codeEditor" class="code-editor" spellcheck="false" wrap="off"></textarea>
+      </div>
+
+      <div class="editor-status">
+        <span id="lineInfo">Ln 1, Col 1</span>
+        <span id="charInfo">0 chars</span>
+        <span id="saveInfo">Belum disimpan</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container"><p>© 2025 Win Motion Studio v2</p></div>
+</footer>
+
+<div id="toastContainer" class="toast-container"></div>
+
+<div id="modalOverlay" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <i id="modalIcon" class="fa-solid fa-circle-info"></i>
+      <h3 id="modalTitle">Info</h3>
+    </div>
+    <div class="modal-body"><p id="modalBody">Pesan</p></div>
+    <div class="modal-actions" id="modalButtons"></div>
+  </div>
+</div>
+
+<script src="/js/props-detector.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/compositions.js"></script>
+</body>
+</html>

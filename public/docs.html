@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Docs - Win Motion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<header class="navbar">
+  <div class="container navbar-inner">
+    <a href="/studio" class="brand">
+      <div class="brand-icon"><i class="fa-solid fa-film"></i></div>
+      <div class="brand-text">
+        <div class="brand-name">Win Motion</div>
+        <div class="brand-sub">Documentation</div>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="/studio" class="nav-link"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>Studio</span></a>
+      <a href="/compositions" class="nav-link"><i class="fa-solid fa-code"></i> <span>Compositions</span></a>
+      <a href="/render" class="nav-link"><i class="fa-solid fa-photo-film"></i> <span>Renders</span></a>
+      <a href="/docs" class="nav-link active"><i class="fa-solid fa-book"></i> <span>Docs</span></a>
+    </nav>
+    <button id="themeToggle" class="theme-toggle">
+      <i class="fa-solid fa-moon icon-dark"></i>
+      <i class="fa-solid fa-sun icon-light"></i>
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="hero-badge"><i class="fa-solid fa-book"></i> Dokumentasi</span>
+    <h1 class="hero-title">Panduan <span class="gradient-text">Penggunaan</span></h1>
+    <p class="hero-sub">Semua yang perlu kamu tahu tentang Win Motion Studio.</p>
+  </div>
+</section>
+
+<main class="container docs-page">
+
+  <section class="docs-section">
+    <h2><i class="fa-solid fa-rocket"></i> Quick Start</h2>
+    <ol class="docs-steps">
+      <li>Buka halaman <a href="/compositions">Compositions</a> → klik <strong>Composition Baru</strong></li>
+      <li>Pilih template, beri nama, klik <strong>Simpan</strong></li>
+      <li>Buka halaman <a href="/studio">Studio</a> → pilih composition → atur preset</li>
+      <li>Klik <strong>Render Video</strong> → tunggu proses</li>
+      <li>Lihat hasil di halaman <a href="/render">Renders</a></li>
+    </ol>
+  </section>
+
+  <section class="docs-section">
+    <h2><i class="fa-solid fa-code"></i> API Remotion-like</h2>
+    <div class="docs-api">
+      <div class="doc-card">
+        <div class="doc-icon"><i class="fa-solid fa-hashtag"></i></div>
+        <h3>useCurrentFrame()</h3>
+        <p>Nomor frame saat ini (mulai dari 0).</p>
+        <pre><code>const frame = useCurrentFrame();</code></pre>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon"><i class="fa-solid fa-film"></i></div>
+        <h3>useVideoConfig()</h3>
+        <p>Info video: fps, width, height, duration.</p>
+        <pre><code>const { fps, width, height } = useVideoConfig();</code></pre>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <h3>interpolate()</h3>
+        <p>Map frame ke range nilai.</p>
+        <pre><code>interpolate(frame, [0, 30], [0, 100], { extrapolateRight: 'clamp' })</code></pre>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon"><i class="fa-solid fa-spring"></i></div>
+        <h3>spring()</h3>
+        <p>Animasi pegas fisika.</p>
+        <pre><code>spring({ frame, fps, config: { damping: 12 } })</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="docs-section">
+    <h2><i class="fa-solid fa-file-code"></i> Contoh Composition</h2>
+    <pre class="docs-code"><code>declare const React: any;
+declare const Remotion: any;
+
+const { useCurrentFrame, useVideoConfig, interpolate, AbsoluteFill } = Remotion;
+
+export default function MyComp() {
+  const frame = useCurrentFrame();
+  const { durationInFrames } = useVideoConfig();
+
+  const opacity = interpolate(frame, [0, 20], [0, 1]);
+
+  return React.createElement(
+    AbsoluteFill,
+    { style: { background: '#0078d4', opacity } },
+    React.createElement('h1', { style: { color: 'white' } }, 'Hello!')
+  );
+}</code></pre>
+  </section>
+
+  <section class="docs-section">
+    <h2><i class="fa-solid fa-gauge-high"></i> Preset Tersedia</h2>
+    <div class="docs-table">
+      <table>
+        <thead><tr><th>Preset</th><th>Ukuran</th><th>Untuk</th></tr></thead>
+        <tbody>
+          <tr><td>480p SD</td><td>854×480</td><td>Preview cepat</td></tr>
+          <tr><td>720p HD</td><td>1280×720</td><td>YouTube, web</td></tr>
+          <tr><td>1080p FHD</td><td>1920×1080</td><td>Standard</td></tr>
+          <tr><td>1440p QHD</td><td>2560×1440</td><td>Premium</td></tr>
+          <tr><td>4K UHD</td><td>3840×2160</td><td>Cinema</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="docs-section">
+    <h2><i class="fa-solid fa-shield-halved"></i> Error Umum</h2>
+    <div class="docs-faq">
+      <div class="faq-item">
+        <h4>❌ ffmpeg gagal</h4>
+        <p>Pastikan <code>ffmpeg-static</code> terinstall. Cek dengan <code>npm run doctor</code>.</p>
+      </div>
+      <div class="faq-item">
+        <h4>❌ Chrome tidak ditemukan</h4>
+        <p>Install Google Chrome, atau set env <code>CHROME_PATH</code>.</p>
+      </div>
+      <div class="faq-item">
+        <h4>❌ Render sangat lambat</h4>
+        <p>Kurangi resolusi (720p), atau pakai quality <code>Low</code>.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container"><p>© 2025 Win Motion Studio v2</p></div>
+</footer>
+
+<div id="toastContainer" class="toast-container"></div>
+
+<script src="/js/common.js"></script>
+<script src="/js/docs.js"></script>
+</body>
+</html>

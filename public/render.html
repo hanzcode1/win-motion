@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Renders - Win Motion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<header class="navbar">
+  <div class="container navbar-inner">
+    <a href="/studio" class="brand">
+      <div class="brand-icon"><i class="fa-solid fa-film"></i></div>
+      <div class="brand-text">
+        <div class="brand-name">Win Motion</div>
+        <div class="brand-sub">Renders</div>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="/studio" class="nav-link"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>Studio</span></a>
+      <a href="/compositions" class="nav-link"><i class="fa-solid fa-code"></i> <span>Compositions</span></a>
+      <a href="/render" class="nav-link active"><i class="fa-solid fa-photo-film"></i> <span>Renders</span></a>
+      <a href="/docs" class="nav-link"><i class="fa-solid fa-book"></i> <span>Docs</span></a>
+    </nav>
+    <button id="themeToggle" class="theme-toggle">
+      <i class="fa-solid fa-moon icon-dark"></i>
+      <i class="fa-solid fa-sun icon-light"></i>
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="hero-badge"><i class="fa-solid fa-photo-film"></i> Gallery</span>
+    <h1 class="hero-title">Hasil <span class="gradient-text">Render</span></h1>
+    <p class="hero-sub">Semua video yang pernah kamu render ada di sini.</p>
+  </div>
+</section>
+
+<section class="container section">
+  <div class="section-header">
+    <h2><i class="fa-solid fa-photo-film"></i> Gallery</h2>
+    <div style="display:flex;gap:8px">
+      <input type="text" id="searchInput" placeholder="Cari nama file…" style="padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:var(--input-bg);color:var(--text);font-size:12px;width:200px">
+      <button class="btn btn-ghost btn-sm" id="refreshBtn"><i class="fa-solid fa-rotate"></i> Refresh</button>
+    </div>
+  </div>
+  <div id="rendersList" class="renders-grid">
+    <div class="empty-state">
+      <i class="fa-solid fa-spinner fa-spin"></i>
+      <p>Memuat…</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container"><p>© 2025 Win Motion Studio v2</p></div>
+</footer>
+
+<div id="toastContainer" class="toast-container"></div>
+
+<!-- Video preview modal -->
+<div id="videoModal" class="modal-overlay video-modal-overlay hidden">
+  <div class="modal video-modal">
+    <div class="modal-header video-modal-header">
+      <i class="fa-solid fa-video"></i>
+      <h3 id="videoTitle">Preview</h3>
+      <button class="btn-icon" id="closeVideoBtn" title="Tutup (Esc)">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="modal-body video-modal-body">
+      <video id="modalVideo" controls playsinline preload="metadata"></video>
+    </div>
+    <div class="modal-actions video-modal-actions">
+      <button class="btn btn-ghost btn-sm" id="modalDownloadBtn">
+        <i class="fa-solid fa-download"></i> Download
+      </button>
+      <button class="btn btn-primary btn-sm" id="modalCloseBtn">
+        <i class="fa-solid fa-xmark"></i> Tutup
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="modalOverlay" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <i id="modalIcon" class="fa-solid fa-circle-info"></i>
+      <h3 id="modalTitle">Info</h3>
+    </div>
+    <div class="modal-body"><p id="modalBody">Pesan</p></div>
+    <div class="modal-actions" id="modalButtons"></div>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="/js/render.js"></script>
+</body>
+</html>
