@@ -145,7 +145,7 @@ npm run doctor
 npm start
 ```
 
-Akses aplikasi melalui browser pada alamat **http://localhost:3000**.
+Akses aplikasi melalui browser pada alamat **http://localhost:8000**.
 
 ---
 
