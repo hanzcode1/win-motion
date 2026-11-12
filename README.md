@@ -92,7 +92,7 @@
 Buka PowerShell atau Command Prompt (CMD), lalu jalankan perintah berikut:
 
 ```powershell
-git clone https://github.com/username/win-motion.git
+git clone https://github.com/hanzcode1/win-motion.git
 cd win-motion
 ```
 
